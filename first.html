@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>主頁</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <style>
+        .navbar-collapse {
+            flex-basis: 100%;
+            flex-grow: 1;
+            align-items: center;
+        }
+        img{
+            display: block;
+            margin: 0 auto;
+        }
+        .maintext{
+            zoom: 75%; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        th {text-align: left;}
+        </style>
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5"><a class="navbar-brand" href="first.html">關健食克</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="first.html">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">熱量</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="calories_all.php">總覽</a>
+                            <a class="dropdown-item" href="calories_1.php">200以下</a>
+                            <a class="dropdown-item" href="calories_2.php">200~300</a>
+                            <a class="dropdown-item" href="calories_3.php">300~400</a>
+                            <a class="dropdown-item" href="calories_4.php">400~500</a>
+                            <a class="dropdown-item" href="calories_5.php">500以上</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">購物</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="Topping Recommendation.php">迷客夏</a>
+                            <a class="dropdown-item" href="#">CoCo 都可</a>
+                            <a class="dropdown-item" href="#">麻古茶坊</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <form class="form-inline">
+                <input type="text" name="search_text" id="search_text" placeholder="Search" class="form-control mr-sm-2" />
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                Search
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">查詢結果</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="search_result">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                                
+                <br><br>
+                <div id="search_result"></div>
+            
+                <script>
+                    $(document).ready(function () {
+
+                        load_data();
+
+                        function load_data(query) {
+                            $.ajax({
+                                url: "search.php",
+                                method: "GET",
+                                data: {
+                                    s: query
+                                },
+                                success: function (data) {
+                                    $('#search_result').html(data);
+                                }
+                            });
+                        }
+                        $('#search_text').keyup(function () {
+                            var search = $(this).val();
+                            if (search != '') {
+                                load_data(search);
+                            } else {
+                                load_data();
+                            }
+                        });
+                    });
+                </script>
+            </form>
+        </div>
+    </nav>
+    <!-- Page Content-->
+    <div class="container px-4 px-lg-5 maintext">
+        <!-- Heading Row-->
+        <div class="row gx-4 gx-lg-5 align-items-center my-5">
+            <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0"
+                    src="https://cdn.pixabay.com/photo/2017/04/19/13/03/coffee-2242213__340.jpg" alt="..." /></div>
+            <div class="col-lg-5">
+                <h1 class="font-weight-light">關健食克</h1>
+                <p>This is a website taking about Milkshop, CoCo and 
+                   Macu for customers to buy three different shops' 
+                   drinks in one website. They can search what range of
+                   calories they want and go buy  it on the order page.
+                </p>
+                <p>Made by 賀照捷、劉宸瑋、郭蕙瑄、王慧綸、李穎瑄</p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">迷客夏</h2>
+                        <hr>
+                        <img src="https://www.milkshoptea.com/image/logo.jpg" alt="milkshop" width="225">
+                    </div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="Topping Recommendation.php">Go</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">CoCo 都可</h2>
+                        <hr>
+                        <img src="data:image/png;base64,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" alt="CoCo">
+                    </div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="coco1.php">Go</a></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">麻古茶坊</h2>
+                        <hr>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyjoszu7RIZTxGfQZwzzjoUCmbRB3wUBP5fg&usqp=CAU" alt="MACU">
+                    </div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="macu0.php">Go</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="py-5 bg-dark">
+        <div class="container px-4 px-lg-5">
+            <p class="m-0 text-center text-white">&copy; 網頁程式設計第12組</p>
+        </div>
+    </footer>
+</body>
+</html>
